@@ -1,0 +1,5 @@
+broker,iteration_1 (ms),iteration_2 (ms),iteration_3 (ms),iteration_4 (ms),iteration_5 (ms),iteration_6 (ms),iteration_7 (ms),iteration_8 (ms),iteration_9 (ms),iteration_10 (ms),average (ms)
+broker.mqttdashboard.com,124.73,122.89,122.95,124.11,124.46,123.58,126.13,128.23,123.37,128.97,124.94
+test.mosquitto.org,134.98,126.45,143.73,171.39,127.43,124.12,139.25,133.81,220.54,125.6,144.73
+broker.emqx.io,129.77,129.25,127.29,128.09,127.04,128.29,128.62,129.35,134.17,128.19,129.01
+public.cloud.shiftr.io,293.41,387.87,395.02,292.86,286.44,290.03,388.29,197.85,202.89,215.85,295.05
