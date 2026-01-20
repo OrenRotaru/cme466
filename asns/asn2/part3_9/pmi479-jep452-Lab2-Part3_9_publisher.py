@@ -2,6 +2,7 @@ import paho.mqtt.client as paho
 import time
 import threading
 import pickle
+# import gpiozero as gpio
 
 payload = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
