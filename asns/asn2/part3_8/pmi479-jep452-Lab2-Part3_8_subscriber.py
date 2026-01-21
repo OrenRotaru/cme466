@@ -1,26 +1,24 @@
 import paho.mqtt.client as paho
 import pickle
 
-# Callback which subscribes to the topic upon connection
 def on_connect(client, userdata, flags, reason_code, properties):
-    print(f"Connected with code {reason_code}.")
+    print(f"Subscriber connected with code {reason_code}.")
     client.subscribe("jpor/asn2")
-    print("Subscribed to jpor/asn2. Waiting for messages... (Ctrl+C to stop)")
 
-# Callback which deserializes the payload and prints the second element if it's an array
 def on_message(client, userdata, msg):
-    payload = pickle.loads(msg.payload)
-    print(f"Received: {payload} on topic {msg.topic}")
-    # if its an array can, access the second element
-    if isinstance(payload, list):
-        print(f"Second element: {payload[1]}")
-    else:
-        print(f"Payload is not a list: {payload}")
+    try:
+        payload = pickle.loads(msg.payload)
+        
+        # Check if the message is the button alert
+        if payload == "BUTTON PRESED":
+            print("Subscriber: BUTTON PRESSED")
+        else:
+            print(f"Received other data: {payload}")
+            
+    except Exception as e:
+        print(f"Error decoding: {e}")
 
-
-client = paho.Client(
-    paho.CallbackAPIVersion.VERSION2, client_id="", userdata=None, protocol=paho.MQTTv5
-)
+client = paho.Client(paho.CallbackAPIVersion.VERSION2, client_id="", protocol=paho.MQTTv5)
 client.on_connect = on_connect
 client.on_message = on_message
 
@@ -30,6 +28,7 @@ port = 1883
 client.connect(mqttBroker, port)
 
 try:
+    print("Subscriber waiting for messages...")
     client.loop_forever()
 except KeyboardInterrupt:
     print("\nDisconnecting...")

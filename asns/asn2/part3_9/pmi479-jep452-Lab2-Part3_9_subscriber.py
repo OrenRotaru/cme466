@@ -1,36 +1,39 @@
 import paho.mqtt.client as paho
 import pickle
+from gpiozero import LED
 
-# Callback which subscribes to the topic upon connection
+led = LED(23)
+
+# MQTT Callbacks
 def on_connect(client, userdata, flags, reason_code, properties):
     print(f"Connected with code {reason_code}.")
     client.subscribe("jpor/asn2")
-    print("Subscribed to jpor/asn2. Waiting for messages... (Ctrl+C to stop)")
 
-# Callback which deserializes the payload and prints the second element if it's an array
+# Message callback
 def on_message(client, userdata, msg):
     payload = pickle.loads(msg.payload)
-    print(f"Received: {payload} on topic {msg.topic}")
-    # if its an array can, access the second element
-    if isinstance(payload, list):
-        print(f"Second element: {payload[1]}")
-    else:
-        print(f"Payload is not a list: {payload}")
+    # Control LED based on the message typed in the publisher
+    if payload == "on":
+        led.on()
+    elif payload == "off":
+        led.off()
+    print(f"Received: {payload}")
 
-
+# MQTT Client Setup
 client = paho.Client(
     paho.CallbackAPIVersion.VERSION2, client_id="", userdata=None, protocol=paho.MQTTv5
 )
+# Assign callbacks
 client.on_connect = on_connect
 client.on_message = on_message
 
+# Connect to Broker
 mqttBroker = "broker.mqttdashboard.com"
-port = 1883
+client.connect(mqttBroker, 1883)
 
-client.connect(mqttBroker, port)
-
+# Start the MQTT client loop
 try:
     client.loop_forever()
 except KeyboardInterrupt:
-    print("\nDisconnecting...")
+    led.off()
     client.disconnect()

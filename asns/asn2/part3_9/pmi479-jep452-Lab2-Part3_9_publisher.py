@@ -1,44 +1,37 @@
 import paho.mqtt.client as paho
-import time
-import threading
 import pickle
-# import gpiozero as gpio
+import threading
 
-payload = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
+# MQTT Client Setup
 connected_event = threading.Event()
 
-client = paho.Client(
-    paho.CallbackAPIVersion.VERSION2, client_id="", userdata=None, protocol=paho.MQTTv5
-)
-
-# Callback which sets the connected event upon connection
+# MQTT Callbacks
 def on_connect(client, userdata, flags, reason_code, properties):
     print(f"CONNACK received with code {reason_code}.")
     connected_event.set()
 
-
+# MQTT Client Initialization
+client = paho.Client(
+    paho.CallbackAPIVersion.VERSION2, client_id="", userdata=None, protocol=paho.MQTTv5
+)
 client.on_connect = on_connect
 
+# Connect to Broker
 mqttBroker = "broker.mqttdashboard.com"
-port = 1883
-
-client.connect(mqttBroker, port)
+client.connect(mqttBroker, 1883)
 client.loop_start()
 
-# Wait for connection to be established
 connected_event.wait()
 
 try:
-    count = 0
+    # Publish messages based on user input in terminal
     while True:
-        payload_bytes = pickle.dumps(payload)
-        print(f"Publishing '{payload_bytes}' to jpor/asn2")
-        result = client.publish("jpor/asn2", payload_bytes)
-        result.wait_for_publish()
-        print(f"Published '{payload}' to jpor/asn2")
-        count += 1
-        time.sleep(1)
+        cmd = input("Enter 'on', 'off', or 'exit': ").strip().lower()
+        if cmd == 'exit': # exit breaks and stops the program
+            break
+        if cmd in ['on', 'off']:
+            payload_bytes = pickle.dumps(cmd)
+            client.publish("jpor/asn2", payload_bytes)
 except KeyboardInterrupt:
     print("\nStopping...")
 
