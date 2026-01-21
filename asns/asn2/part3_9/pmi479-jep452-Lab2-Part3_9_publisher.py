@@ -2,7 +2,7 @@ import paho.mqtt.client as paho
 import pickle
 import threading
 
-# MQTT Client Setup
+# Event to signal when connected
 connected_event = threading.Event()
 
 # MQTT Callbacks

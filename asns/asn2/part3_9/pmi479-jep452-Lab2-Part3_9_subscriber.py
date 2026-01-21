@@ -31,7 +31,7 @@ client.on_message = on_message
 mqttBroker = "broker.mqttdashboard.com"
 client.connect(mqttBroker, 1883)
 
-# Start the MQTT client loop
+# Main loop
 try:
     client.loop_forever()
 except KeyboardInterrupt:
