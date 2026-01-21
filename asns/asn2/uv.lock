@@ -7,16 +7,16 @@ name = "asn2"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
-    { name = "gpiozero" },
-    { name = "lgpio" },
+    { name = "gpiozero", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'armv7l' and sys_platform == 'linux')" },
+    { name = "lgpio", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'armv7l' and sys_platform == 'linux')" },
     { name = "paho-mqtt" },
     { name = "pandas" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "gpiozero", specifier = ">=2.0.1" },
-    { name = "lgpio", specifier = ">=0.2.2.0" },
+    { name = "gpiozero", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'armv7l' and sys_platform == 'linux')", specifier = ">=2.0.1" },
+    { name = "lgpio", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'armv7l' and sys_platform == 'linux')", specifier = ">=0.2.2.0" },
     { name = "paho-mqtt", specifier = ">=2.1.0" },
     { name = "pandas", specifier = ">=2.3.3" },
 ]
