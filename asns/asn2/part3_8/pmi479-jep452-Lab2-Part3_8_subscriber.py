@@ -11,9 +11,9 @@ def on_message(client, userdata, msg):
     try:
         payload = pickle.loads(msg.payload)
         
-        # Check if the message is the button alert
-        if payload == "BUTTON PRESED":
-            print("Subscriber: BUTTON PRESSED")
+        # Check if the message is a distance (float/int)
+        if isinstance(payload, (float, int)):
+            print(f"Live Sensor Data: {payload} cm")
         else:
             print(f"Received other data: {payload}")
             
@@ -25,7 +25,6 @@ client = paho.Client(paho.CallbackAPIVersion.VERSION2, client_id="", protocol=pa
 client.on_connect = on_connect
 client.on_message = on_message
 
-# Connect to the MQTT Broker
 mqttBroker = "broker.mqttdashboard.com"
 port = 1883
 
@@ -33,7 +32,7 @@ client.connect(mqttBroker, port)
 
 # Main loop
 try:
-    print("Subscriber waiting for messages...")
+    print("Subscriber waiting for live sensor updates...")
     client.loop_forever()
 except KeyboardInterrupt:
     print("\nDisconnecting...")

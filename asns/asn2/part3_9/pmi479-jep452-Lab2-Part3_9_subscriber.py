@@ -2,7 +2,7 @@ import paho.mqtt.client as paho
 import pickle
 from gpiozero import LED
 
-led = LED(23)
+led = LED(22)
 
 # MQTT Callbacks
 def on_connect(client, userdata, flags, reason_code, properties):

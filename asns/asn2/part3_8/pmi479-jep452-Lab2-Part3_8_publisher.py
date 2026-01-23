@@ -2,10 +2,11 @@ import paho.mqtt.client as paho
 import time
 import threading
 import pickle
-from gpiozero import Button, LED
+from gpiozero import DistanceSensor, LED
 
-button = Button(24)
-led = LED(23)
+# GPIO Pin Setup
+sensor = DistanceSensor(echo=24, trigger=23)
+led = LED(22)
 
 # Event to signal when connected
 connected_event = threading.Event()
@@ -28,22 +29,24 @@ client.connect(mqttBroker, port)
 client.loop_start()
 connected_event.wait()
 
-# Function to send the button alert
-def send_button_event():
-    led.on() # Feedback on the PI side to confirm button press
-    msg = "BUTTON PRESED"
-    client.publish("jpor/asn2", pickle.dumps(msg))
-    print(f"Published: {msg}")
-    time.sleep(0.2)
-    led.off()
-
-# Link the physical button to the function
-button.when_pressed = send_button_event
-
 try:
-    print("Publisher is running. Press the button on GPIO 24...")
+    print("Publisher is running. Sending Distance data...")
     while True:
-        time.sleep(1)
+        # gpiozero returns distance in meters, multiplying by 100 for cm
+        distance_cm = round(sensor.distance * 100, 2)
+        
+        # Local feedback: LED turns on if object is closer than 5cm
+        if distance_cm < 5:
+            led.on()
+        else:
+            led.off()
+
+        # Publish the numeric distance
+        client.publish("jpor/asn2", pickle.dumps(distance_cm))
+        print(f"Published: {distance_cm} cm")
+        
+        time.sleep(1)  # Publish rate: 1 Hz
+
 except KeyboardInterrupt:
     print("\nStopping Publisher...")
 
