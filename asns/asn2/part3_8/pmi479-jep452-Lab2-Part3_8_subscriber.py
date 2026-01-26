@@ -1,10 +1,18 @@
+# Lab 2 - Part 3.8 Subscriber
+
 import paho.mqtt.client as paho
 import pickle
+
+# Configuration Parameters
+MQTT_BROKER = "broker.mqttdashboard.com"
+PORT = 1883
+TOPIC = "jpor/asn2"
 
 # MQTT on_connect callback
 def on_connect(client, userdata, flags, reason_code, properties):
     print(f"Subscriber connected with code {reason_code}.")
-    client.subscribe("jpor/asn2")
+    # Subscribe to the topic upon connection
+    client.subscribe(TOPIC)
 
 # MQTT on_message callback
 def on_message(client, userdata, msg):
@@ -21,14 +29,16 @@ def on_message(client, userdata, msg):
         print(f"Error decoding: {e}")
 
 # MQTT Client Setup
-client = paho.Client(paho.CallbackAPIVersion.VERSION2, client_id="", protocol=paho.MQTTv5)
+client = paho.Client(
+    paho.CallbackAPIVersion.VERSION2, 
+    client_id="subscriber_node", 
+    protocol=paho.MQTTv5
+)
 client.on_connect = on_connect
 client.on_message = on_message
 
-mqttBroker = "broker.mqttdashboard.com"
-port = 1883
-
-client.connect(mqttBroker, port)
+# Connect to the MQTT Broker
+client.connect(MQTT_BROKER, PORT)
 
 # Main loop
 try:

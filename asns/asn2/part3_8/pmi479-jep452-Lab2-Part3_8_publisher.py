@@ -1,8 +1,16 @@
+# Lab 2 - Part 3.8 Publisher
+
 import paho.mqtt.client as paho
 import time
 import threading
 import pickle
 from gpiozero import DistanceSensor, LED
+
+# Configuration Parameters
+MQTT_BROKER = "broker.mqttdashboard.com"
+PORT = 1883
+TOPIC = "jpor/asn2"
+PUBLISH_INTERVAL = 1  # 1 Hz
 
 # GPIO Pin Setup
 sensor = DistanceSensor(echo=24, trigger=23)
@@ -17,16 +25,18 @@ def on_connect(client, userdata, flags, reason_code, properties):
     connected_event.set()
 
 # MQTT Client Setup
-client = paho.Client(paho.CallbackAPIVersion.VERSION2, client_id="", protocol=paho.MQTTv5)
+client = paho.Client(
+    paho.CallbackAPIVersion.VERSION2, 
+    client_id="publisher_node", 
+    protocol=paho.MQTTv5
+)
 client.on_connect = on_connect
 
-# Connect to the MQTT Broker
-mqttBroker = "broker.mqttdashboard.com"
-port = 1883
-
 # Establish connection
-client.connect(mqttBroker, port)
+client.connect(MQTT_BROKER, PORT)
 client.loop_start()
+
+# Wait for connection to be established
 connected_event.wait()
 
 try:
@@ -42,10 +52,11 @@ try:
             led.off()
 
         # Publish the numeric distance
-        client.publish("jpor/asn2", pickle.dumps(distance_cm))
-        print(f"Published: {distance_cm} cm")
+        payload_bytes = pickle.dumps(distance_cm)
+        client.publish(TOPIC, payload_bytes)
         
-        time.sleep(1)  # Publish rate: 1 Hz
+        print(f"Published: {distance_cm} cm")
+        time.sleep(PUBLISH_INTERVAL)
 
 except KeyboardInterrupt:
     print("\nStopping Publisher...")

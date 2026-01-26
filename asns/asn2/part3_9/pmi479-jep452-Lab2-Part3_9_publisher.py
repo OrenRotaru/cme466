@@ -1,6 +1,13 @@
+# Lab 2 - Part 3.9 Publisher
+
 import paho.mqtt.client as paho
 import pickle
 import threading
+
+# Configuration Parameters
+MQTT_BROKER = "broker.mqttdashboard.com"
+PORT = 1883
+TOPIC = "jpor/asn2"
 
 # Event to signal when connected
 connected_event = threading.Event()
@@ -12,13 +19,15 @@ def on_connect(client, userdata, flags, reason_code, properties):
 
 # MQTT Client Initialization
 client = paho.Client(
-    paho.CallbackAPIVersion.VERSION2, client_id="", userdata=None, protocol=paho.MQTTv5
+    paho.CallbackAPIVersion.VERSION2, 
+    client_id="publisher_node", 
+    userdata=None, 
+    protocol=paho.MQTTv5
 )
 client.on_connect = on_connect
 
 # Connect to Broker
-mqttBroker = "broker.mqttdashboard.com"
-client.connect(mqttBroker, 1883)
+client.connect(MQTT_BROKER, PORT)
 client.loop_start()
 
 connected_event.wait()
@@ -31,7 +40,7 @@ try:
             break
         if cmd in ['on', 'off']:
             payload_bytes = pickle.dumps(cmd)
-            client.publish("jpor/asn2", payload_bytes)
+            client.publish(TOPIC, payload_bytes)
 except KeyboardInterrupt:
     print("\nStopping...")
 
