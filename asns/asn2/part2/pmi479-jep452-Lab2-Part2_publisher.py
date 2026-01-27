@@ -1,8 +1,10 @@
+# Lab 2 - Part 2 Publisher
+
 import paho.mqtt.client as paho
 import time
 import threading
 import pickle
-import uuid
+import uuid # to generate unique client ids for v311
 
 # Configuration
 ITERATIONS = 10
@@ -34,7 +36,8 @@ def publish_to_broker(broker_config):
     # Use MQTTv311 if specified, otherwise MQTTv5
     protocol = paho.MQTTv311 if broker_config.get("protocol") == "v311" else paho.MQTTv5
 
-    # for v311, we need to specify a client id
+    # for v311, we need to specify a client id. Used the uuid package to generate a random
+    # unique string for the client id.
     client_id = f"pub-{uuid.uuid4().hex[:8]}" if broker_config.get("protocol") == "v311" else ""
     
     client = paho.Client(paho.CallbackAPIVersion.VERSION2, client_id=client_id, 

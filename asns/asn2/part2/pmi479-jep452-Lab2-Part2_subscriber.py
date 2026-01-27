@@ -1,8 +1,10 @@
+# Lab 2 - Part 2 Subscriber
+
 import paho.mqtt.client as paho
 import pickle
 import time
-import pandas as pd
-import uuid
+import pandas as pd # to easily save results to a CSV file
+import uuid # to generate unique client ids for v311
 
 # Settings to connect to the public brokers.
 PUBLIC_BROKERS = [
@@ -43,7 +45,8 @@ def create_client(broker_config):
     """Create and start a client for a broker."""
     host = broker_config["host"]
     protocol = paho.MQTTv311 if broker_config.get("protocol") == "v311" else paho.MQTTv5
-    # for v311, we need to specify a client id
+    # for v311, we need to specify a client id. Used the uuid package to generate a random
+    # unique string for the client id.
     client_id = f"sub-{uuid.uuid4().hex[:8]}" if broker_config.get("protocol") == "v311" else ""
     
     client = paho.Client(paho.CallbackAPIVersion.VERSION2, client_id=client_id, 
