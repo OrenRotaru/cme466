@@ -115,10 +115,14 @@ function App() {
     setWarningLight(false);
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (displayMessage.trim()) {
-      // TODO: Send to display board via MQTT
-      setDisplayMessage("");
+      try {
+        await pyInvoke("send_to_display_board", { message: displayMessage.trim() });
+        setDisplayMessage("");
+      } catch (error) {
+        console.error("Failed to send to display board:", error);
+      }
     }
   };
 

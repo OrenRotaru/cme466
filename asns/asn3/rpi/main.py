@@ -17,7 +17,9 @@ def main():
     p_gpio = mp.Process(target=gpio_main, args=(command_queue, telemetry_queue))
 
     # start the processes
+    print("Starting MQTT worker...")
     p_mqtt.start()
+    print("Starting GPIO worker...")
     p_gpio.start()
 
     try:

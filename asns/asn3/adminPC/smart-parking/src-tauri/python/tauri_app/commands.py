@@ -10,6 +10,7 @@ Request/Response flow:
 3. Pydantic handles serialization/deserialization automatically
 """
 
+import json
 from typing import Annotated
 
 from pytauri import Commands, State
@@ -28,7 +29,8 @@ from tauri_app.models import (
 # MQTT Configuration
 MQTT_BROKER = "broker.mqttdashboard.com"
 MQTT_PORT = 1883
-MQTT_TOPIC = "asn3/jep453-pmi479"
+MQTT_TOPIC_SUBSCRIBE = "jep453-pmi479/asn3/admin"  # Receive sensor data from RPi
+MQTT_TOPIC_PUBLISH = "jep453-pmi479/asn3/rpi"      # Send commands to RPi
 
 # Global commands registry - this will be used in __init__.py
 commands: Commands = Commands()
@@ -69,7 +71,7 @@ async def subscribe_to_mqtt_broker(
     """
     # If already subscribed, return immediately
     if mqtt.subscribed:
-        print(f"Already subscribed to {MQTT_TOPIC}")
+        print(f"Already subscribed to {MQTT_TOPIC_SUBSCRIBE}")
         return SubscribeToMQTTBrokerResponse(subscribed=True)
     
     # Clear events for fresh subscription attempt
@@ -89,15 +91,15 @@ async def subscribe_to_mqtt_broker(
                 return SubscribeToMQTTBrokerResponse(subscribed=False)
         
         # Subscribe to the topic
-        print(f"Subscribing to topic: {MQTT_TOPIC}")
-        mqtt.client.subscribe(MQTT_TOPIC)
+        print(f"Subscribing to topic: {MQTT_TOPIC_SUBSCRIBE}")
+        mqtt.client.subscribe(MQTT_TOPIC_SUBSCRIBE)
         
         # Wait for subscription confirmation (timeout after 10 seconds)
         if not mqtt.subscribe_event.wait(timeout=10.0):
             print("Subscription timeout!")
             return SubscribeToMQTTBrokerResponse(subscribed=False)
         
-        print(f"Successfully subscribed to {MQTT_TOPIC}")
+        print(f"Successfully subscribed to {MQTT_TOPIC_SUBSCRIBE}")
         return SubscribeToMQTTBrokerResponse(subscribed=True)
         
     except Exception as e:
@@ -140,14 +142,29 @@ async def clear_mqtt_messages(
 # ============================================================================
 
 @commands.command()
-async def send_to_display_board(body: DisplayBoardMessage) -> None:
+async def send_to_display_board(
+    body: DisplayBoardMessage,
+    mqtt: Annotated[MqttState, State()],
+) -> None:
     """
-    Send a message to the display board.
+    Send a message to the display board via MQTT.
     
     Frontend usage:
         await pyInvoke("send_to_display_board", { message: "Hello, world!" });
     """
+    # Build the command payload according to the schema
+    payload = json.dumps({
+        "command": "display_to_console",
+        "message": body.message
+    })
+    
     print(f"Sending message to display board: {body.message}")
-
-    # TODO: Implement the logic to send the message to the display board
+    
+    # Publish to MQTT topic (RPi listens on this topic)
+    if mqtt.connected:
+        mqtt.client.publish(MQTT_TOPIC_PUBLISH, payload)
+        print(f"Published to {MQTT_TOPIC_PUBLISH}: {payload}")
+    else:
+        print("Warning: MQTT not connected, message not sent")
+    
     return None
