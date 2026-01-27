@@ -4,4 +4,12 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "python-dotenv>=1.2.1",
+    "paho-mqtt>=2.1.0",
+    "pandas>=2.3.3",
+    # Hardware dependencies with environment markers
+    "gpiozero>=2.0.1; sys_platform == 'linux' and (platform_machine == 'aarch64' or platform_machine == 'armv7l')",
+    "lgpio>=0.2.2.0; sys_platform == 'linux' and (platform_machine == 'aarch64' or platform_machine == 'armv7l')",
+    "jsonschema>=4.26.0",
+]

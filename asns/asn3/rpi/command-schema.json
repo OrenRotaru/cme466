@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "oneOf": [
+    {
+      "description": "Toggle the warning system",
+      "properties": {
+        "command": { "const": "warning" },
+        "state": { "enum": ["on", "off"] }
+      },
+      "required": ["command", "state"],
+      "additionalProperties": false
+    },
+    {
+      "description": "Print a message to the terminal",
+      "properties": {
+        "command": { "const": "display_to_console" },
+        "message": { "type": "string", "minLength": 1 }
+      },
+      "required": ["command", "message"],
+      "additionalProperties": false
+    }
+  ]
+}
