@@ -1,0 +1,439 @@
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  
+  --bg: #1a1a1a;
+  --bg-elevated: #242424;
+  --bg-input: #2a2a2a;
+  --border: #333;
+  --text: #e0e0e0;
+  --text-dim: #808080;
+  --accent: #4a4a4a;
+  --green: #4ade80;
+  --red: #f87171;
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Dashboard Layout */
+.dashboard {
+  height: 100vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+/* Parking Row */
+.parking-row {
+  align-items: center;
+}
+
+.parking-info {
+  display: flex;
+  flex-direction: column;
+  padding-right: 24px;
+  border-right: 1px solid var(--border);
+  margin-right: 4px;
+}
+
+.big-number {
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1;
+}
+
+.info-label {
+  font-size: 12px;
+  color: var(--text-dim);
+  text-transform: lowercase;
+}
+
+.spots-container {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+}
+
+.spot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 24px;
+  background: var(--bg-elevated);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.spot:hover {
+  background: var(--bg-input);
+}
+
+.spot-num {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.spot-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.spot-light.green {
+  background: var(--green);
+}
+
+.spot-light.red {
+  background: var(--red);
+}
+
+/* Middle Row */
+.middle-row {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Warning Area */
+.warning-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  background: var(--bg-elevated);
+  border-radius: 8px;
+  min-width: 160px;
+}
+
+.light-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.light-bulb {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: background 0.2s ease;
+}
+
+.light-indicator.on .light-bulb {
+  background: var(--red);
+  animation: flash 0.6s ease-in-out infinite;
+}
+
+@keyframes flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.light-indicator.off .light-bulb {
+  background: var(--green);
+}
+
+.warning-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.ctrl-btn {
+  padding: 10px 16px;
+  background: var(--bg-input);
+  border: none;
+  border-radius: 6px;
+  color: var(--text-dim);
+  font-size: 12px;
+  text-transform: lowercase;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ctrl-btn:hover {
+  background: var(--accent);
+  color: var(--text);
+}
+
+.ctrl-btn.active {
+  background: var(--accent);
+  color: var(--text);
+}
+
+/* Console Area */
+.console-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elevated);
+  border-radius: 8px;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.console-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.console-label {
+  font-size: 11px;
+  text-transform: lowercase;
+  color: var(--text-dim);
+}
+
+.clear-btn {
+  padding: 4px 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-dim);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.clear-btn:hover {
+  border-color: var(--text-dim);
+  color: var(--text);
+}
+
+.console-output {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px;
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+  font-size: 12px;
+}
+
+.console-output::-webkit-scrollbar {
+  width: 6px;
+}
+
+.console-output::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.console-output::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.log-line {
+  display: flex;
+  gap: 12px;
+  padding: 4px 0;
+  color: var(--text-dim);
+}
+
+.log-time {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.log-text {
+  color: var(--text-dim);
+}
+
+/* Message Row */
+.message-row {
+  flex-shrink: 0;
+}
+
+.message-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-label {
+  font-size: 11px;
+  text-transform: lowercase;
+  color: var(--text-dim);
+}
+
+.input-container {
+  display: flex;
+  gap: 12px;
+}
+
+.msg-input {
+  flex: 1;
+  padding: 12px 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  resize: none;
+  transition: border-color 0.15s ease;
+}
+
+.msg-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.msg-input::placeholder {
+  color: var(--text-dim);
+}
+
+.send-btn {
+  padding: 12px 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 12px;
+  text-transform: lowercase;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.send-btn:hover:not(:disabled) {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.send-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Remove texture class since we're not using it */
+.texture {
+  display: none;
+}
+
+/* Connection Status Indicator */
+.connection-status {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--bg-elevated);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  z-index: 100;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  transition: background 0.3s ease;
+}
+
+.status-text {
+  font-size: 11px;
+  text-transform: lowercase;
+  color: var(--text-dim);
+}
+
+.connection-status.disconnected .status-dot {
+  background: var(--text-dim);
+}
+
+.connection-status.connecting .status-dot {
+  background: #fbbf24;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.connection-status.connected .status-dot {
+  background: var(--green);
+}
+
+.connection-status.connected .status-text {
+  color: var(--green);
+}
+
+.connection-status.error .status-dot {
+  background: var(--red);
+}
+
+.connection-status.error .status-text {
+  color: var(--red);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 16px;
+  }
+  
+  .row {
+    flex-direction: column;
+  }
+  
+  .parking-info {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding-right: 0;
+    padding-bottom: 12px;
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+  
+  .spots-container {
+    flex-wrap: wrap;
+  }
+  
+  .spot {
+    flex: 1;
+    min-width: 60px;
+  }
+}

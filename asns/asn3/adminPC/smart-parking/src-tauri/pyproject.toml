@@ -1,0 +1,47 @@
+[project]
+name = "tauri-app"  
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.9"
+dependencies = [
+    "anyio>=4.12.1",
+    "nicegui>=3.6.1",
+    "paho-mqtt>=2.1.0",
+    "pydantic>=2.12.5",
+    "pytauri == 0.8.*",
+    "typing-extensions>=4.15.0",
+    "uvicorn>=0.39.0",
+]  
+
+[dependency-groups]
+dev = [
+    "codelldb>=0.1.0",
+    "debugpy>=1.8.19",
+]
+
+
+[project.entry-points.pytauri]
+ext_mod = "tauri_app.ext_mod"
+
+[build-system]
+requires = [
+    "setuptools >= 80",
+    "setuptools-rust >= 1.11, <2",
+    "setuptools-scm >= 8",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages]
+find = { where = ["python"] }
+
+# see: <https://www.maturin.rs/config>
+[tool.maturin]
+# the same as [tool.setuptools.packages.find.where]
+python-source = "python"
+# the same as `[project.entry-points.pytauri.ext_mod]`,
+# i.e., `target` in `setup.py`
+module-name = "tauri_app.ext_mod"
+# see `setup.py`
+features = ["pyo3/extension-module", "tauri/custom-protocol", "pyo3/abi3-py39"]
+# equivalent to `setuptools-scm`
+sdist-generator = "git"
