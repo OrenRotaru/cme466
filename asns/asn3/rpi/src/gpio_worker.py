@@ -55,7 +55,7 @@ def process_command(command: dict):
 
 def display_to_console(message: str):
   """ display a message to the console """
-  print(f"Displaying message: {message}")
+  print(f"{message}")
 
 def warning(state: str):
   """ toggle the warning system """
