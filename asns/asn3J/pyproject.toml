@@ -1,0 +1,12 @@
+[project]
+name = "asn3j"
+version = "0.1.0"
+description = "IoT Smart Parking System"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "paho-mqtt",
+    "PySide6",
+    "gpiozero",
+    "rpi-lgpio; sys_platform == 'linux'"
+]
