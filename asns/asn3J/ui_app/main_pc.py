@@ -131,11 +131,12 @@ class ParkingApp(QMainWindow):
 if __name__ == "__main__":
 
     # Ensure Ctrl+C works to exit the application
-    signal.signal(signal.SIGINT, signal.SIG_DFL)
+    signal.signal(signal.SIGINT, signal.SIG_DFL) # SIG_DFL ensures the program can be interrupted
     app = QApplication(sys.argv)
     window = ParkingApp()
     
     # Timer to keep Python interpreter active for Ctrl+C
+    # Periodically switches back to python interpreter to check for signals
     timer = QTimer()
     timer.start(500) 
     
