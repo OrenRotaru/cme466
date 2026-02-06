@@ -1,0 +1,1 @@
+ 1. When type in RPi: usask, then GUI image box changes from default to usask.jpg, and sends Ack message: Be What the World Needs!; 2. When type in RPi: default, then GUI image box changes from current to default.jpg, and sends Ack message: : Have a great weekend!
