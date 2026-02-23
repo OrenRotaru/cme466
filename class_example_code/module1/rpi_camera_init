@@ -1,0 +1,5 @@
+rpicam-hello --timeout 0
+
+rpicam-hello --timeout 0 --post-process-file negate.json
+
+rpicam-hello --timeout 0 --post-process-file sobel.json
