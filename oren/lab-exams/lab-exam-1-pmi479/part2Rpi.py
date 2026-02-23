@@ -1,6 +1,5 @@
 import time
 from mqtt_simple import MQTTHelper
-# ─── CONFIG ────────────────────────────────────────────────────────────────────
 
 BROKER = "test.mosquitto.org"
 SUB_TOPIC = "cme466_lab_exam_pmi479"

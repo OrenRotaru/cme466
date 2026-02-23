@@ -1,12 +1,3 @@
-"""
-Picture GUI using PyQt5 and MQTTHelper
-======================================
-Displays images based on MQTT commands.
-
-- Receives "usask" -> displays usask.jpg, sends "Be What the World Needs!"
-- Receives "default" -> displays default.jpg, sends "Have a great weekend!"
-"""
-
 import sys
 import signal
 from pathlib import Path
@@ -29,7 +20,6 @@ USASK_IMAGE = "usask.jpg"
 
 class PictureDialog(QDialog):
 
-    # Signal to bridge MQTT thread -> GUI thread
     message_signal = pyqtSignal(str, bytes)  # topic, payload
 
     def __init__(self):
@@ -53,7 +43,6 @@ class PictureDialog(QDialog):
             auto_decrypt=False,
         )
 
-        # Set callback - emits signal to update GUI safely
         self.mqtt.on_message = lambda t, p: self.message_signal.emit(t, p)
         self.mqtt.connect()
 
@@ -118,7 +107,6 @@ class PictureDialog(QDialog):
 
 
 if __name__ == "__main__":
-    # Allow Ctrl+C to work
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
     app = QApplication(sys.argv)
@@ -126,7 +114,6 @@ if __name__ == "__main__":
     window = PictureDialog()
     window.show()
 
-    # Timer to keep Python responsive for Ctrl+C
     timer = QTimer()
     timer.timeout.connect(lambda: None)
     timer.start(500)

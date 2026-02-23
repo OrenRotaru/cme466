@@ -1,30 +1,3 @@
-"""
-Simple MQTT Client for CME466 Lab Exams
-========================================
-A clean, Qt-free MQTT client. YOU control what happens with messages.
-
-Features:
-- Send/receive text, JSON, images, bytes, pickle
-- Optional Fernet encryption
-- QoS levels (0, 1, 2)
-- Retain messages
-- Last Will and Testament (LWT)
-
-Usage:
-    from mqtt_simple import MQTTHelper
-
-    mqtt = MQTTHelper(
-        broker="broker.hivemq.com",
-        sub_topic="exam/in",
-        pub_topic="exam/out",
-        key=b"your-fernet-key"  # Optional
-    )
-
-    mqtt.on_message = lambda topic, payload: print(payload)
-    mqtt.connect()
-    mqtt.send_text("Hello!", encrypt=True)
-"""
-
 import json
 import pickle
 import time
@@ -37,17 +10,6 @@ from cryptography.fernet import Fernet
 class MQTTHelper:
     """
     Simple MQTT client with encryption support.
-
-    QoS Levels:
-        0 = At most once (fire and forget)
-        1 = At least once (acknowledged delivery)
-        2 = Exactly once (guaranteed single delivery)
-
-    Retain:
-        If True, broker stores the last message for new subscribers
-
-    Last Will (LWT):
-        Message sent automatically by broker if client disconnects unexpectedly
     """
 
     def __init__(

@@ -1,7 +1,6 @@
 import time
 from mqtt_simple import MQTTHelper
 from cryptography.fernet import Fernet
-# ─── CONFIG ────────────────────────────────────────────────────────────────────
 
 BROKER = "test.mosquitto.org"
 MSG_TOPIC = "cme466_group1_mess"
