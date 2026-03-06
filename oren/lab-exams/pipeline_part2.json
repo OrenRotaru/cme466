@@ -1,0 +1,140 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "n2",
+      "dst_port": "image",
+      "id": "e1",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "image",
+      "id": "e2",
+      "src_node": "n2",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "detections",
+      "id": "e3",
+      "src_node": "n2",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "image",
+      "id": "e4",
+      "src_node": "n3",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "detections",
+      "id": "e5",
+      "src_node": "n3",
+      "src_port": "detections"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T23:20:00+00:00",
+    "example": "lab_exam2_eyes_eyeglasses"
+  },
+  "nodes": [
+    {
+      "block_type": "ImageInput",
+      "enabled": true,
+      "id": "n1",
+      "params": {
+        "image_path": "/Users/oren/code/cme466/oren/lab-exams/lab-exam-2/lab-exam-2-pmi479/eyeglass2.jpg"
+      },
+      "title": "Eyeglass2 Input",
+      "x": -500,
+      "y": -70
+    },
+    {
+      "block_type": "CascadeDetectCustom",
+      "enabled": true,
+      "id": "n2",
+      "params": {
+        "cascade_path": "/Users/oren/code/cme466/oren/lab-exams/lab-exam-2/lab-exam-2-pmi479/haarcascade_eye_tree_eyeglasses.xml",
+        "draw_mode": "none",
+        "draw_thickness": 3,
+        "equalize_hist": true,
+        "flags": 0,
+        "label": "eye",
+        "max_size_h": 120,
+        "max_size_w": 120,
+        "min_neighbors": 8,
+        "min_size_h": 15,
+        "min_size_w": 15,
+        "scale_factor": 1.01,
+        "use_samples_findfile": false
+      },
+      "title": "Eye Tree Eyeglasses Cascade",
+      "x": -160,
+      "y": -70
+    },
+    {
+      "block_type": "DetectionStyleDraw",
+      "enabled": true,
+      "id": "n3",
+      "params": {
+        "filter_by_score": false,
+        "font_scale": 0.45,
+        "high_b": 255,
+        "high_g": 0,
+        "high_r": 0,
+        "label_filter": "eye",
+        "line_type": "aa",
+        "low_b": 255,
+        "low_g": 0,
+        "low_r": 0,
+        "max_score": 10.0,
+        "mid_b": 255,
+        "mid_g": 0,
+        "mid_r": 0,
+        "min_score": -10.0,
+        "score_low": 0.13,
+        "score_mid": 0.3,
+        "shape": "circle",
+        "show_label": false,
+        "show_score": false,
+        "thickness": 3
+      },
+      "title": "Draw Eye Circles",
+      "x": 180,
+      "y": -70
+    },
+    {
+      "block_type": "ContourCount",
+      "enabled": true,
+      "id": "n4",
+      "params": {
+        "annotate": true,
+        "exact_match": true,
+        "label_filter": "eye",
+        "title_prefix": "Eyes"
+      },
+      "title": "Count Eyes",
+      "x": 500,
+      "y": -70
+    }
+  ],
+  "notes": [
+    {
+      "id": "note1",
+      "title": "Tuning",
+      "markdown": "For stricter detection increase min_neighbors or min_size; for missed eyes decrease min_neighbors to 5-6 and reduce min_size.",
+      "x": -500,
+      "y": 110
+    }
+  ],
+  "version": "1.0"
+}

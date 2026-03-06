@@ -1,0 +1,187 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "node_838700e4",
+      "dst_port": "image",
+      "id": "edge_30d1c32d",
+      "src_node": "node_57d312df",
+      "src_port": "image_r"
+    },
+    {
+      "dst_node": "node_47cf4063",
+      "dst_port": "image",
+      "id": "edge_41b118a7",
+      "src_node": "node_838700e4",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "node_5729880a",
+      "dst_port": "mask",
+      "id": "edge_562a74ce",
+      "src_node": "node_b2c87444",
+      "src_port": "mask"
+    },
+    {
+      "dst_node": "node_b2c87444",
+      "dst_port": "image",
+      "id": "edge_a00af305",
+      "src_node": "node_47cf4063",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "node_57d312df",
+      "dst_port": "image",
+      "id": "edge_a73e998f",
+      "src_node": "node_177ce83b",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "node_3f77a9a1",
+      "dst_port": "image",
+      "id": "edge_b7e32f11",
+      "src_node": "node_177ce83b",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "node_3f77a9a1",
+      "dst_port": "detections",
+      "id": "edge_cb88d45e",
+      "src_node": "node_5729880a",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "node_7c2a41e8",
+      "dst_port": "image",
+      "id": "edge_d5b1a6fe",
+      "src_node": "node_3f77a9a1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "node_7c2a41e8",
+      "dst_port": "detections",
+      "id": "edge_ef4513b6",
+      "src_node": "node_5729880a",
+      "src_port": "detections"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T22:41:48.093364+00:00"
+  },
+  "nodes": [
+    {
+      "block_type": "ImageInput",
+      "enabled": true,
+      "id": "node_177ce83b",
+      "params": {
+        "image_path": "/Users/oren/code/cme466/oren/lab-exams/lab-exam-2/lab-exam-2-pmi479/brownleaf-1.jpg"
+      },
+      "title": "Image Input",
+      "x": -268.69017738461673,
+      "y": -95.63450886923084
+    },
+    {
+      "block_type": "ContrastAdjustment",
+      "enabled": true,
+      "id": "node_47cf4063",
+      "params": {
+        "alpha": 0.8999999999999997,
+        "beta": 0
+      },
+      "title": "Contrast Adjustment",
+      "x": 584.8126397834202,
+      "y": -72.93453575093332
+    },
+    {
+      "block_type": "ContoursAnalysis",
+      "enabled": true,
+      "id": "node_5729880a",
+      "params": {
+        "approx_mode": "simple",
+        "area_max": 300,
+        "area_min": 10,
+        "aspect_ratio_max": 1.0,
+        "aspect_ratio_min": 1.0,
+        "binary_thresh": 0,
+        "draw_mode": "both",
+        "draw_thickness": 2,
+        "ensure_binary": true,
+        "filter_by_area": true,
+        "filter_by_aspect_ratio": false,
+        "invert": false,
+        "offset_x": 0,
+        "offset_y": 0,
+        "retrieval": "tree"
+      },
+      "title": "Contours Analysis",
+      "x": 1245.069364735837,
+      "y": -73.90822713043784
+    },
+    {
+      "block_type": "ChannelSplit",
+      "enabled": true,
+      "id": "node_57d312df",
+      "params": {},
+      "title": "Channel Split (B/G/R)",
+      "x": 32.0,
+      "y": -88.0
+    },
+    {
+      "block_type": "DrawDetections",
+      "enabled": true,
+      "id": "node_3f77a9a1",
+      "params": {
+        "show_label": false,
+        "show_score": false
+      },
+      "title": "Draw Contours on Original",
+      "x": 1542.0,
+      "y": -73.0
+    },
+    {
+      "block_type": "ContourCount",
+      "enabled": true,
+      "id": "node_7c2a41e8",
+      "params": {
+        "annotate": true,
+        "exact_match": true,
+        "label_filter": "contour",
+        "title_prefix": "Detected Contours"
+      },
+      "title": "Count Contours",
+      "x": 1826.0,
+      "y": -73.0
+    },
+    {
+      "block_type": "GrayConvert",
+      "enabled": true,
+      "id": "node_838700e4",
+      "params": {},
+      "title": "Gray Convert",
+      "x": 312.0,
+      "y": -76.0
+    },
+    {
+      "block_type": "SimpleThreshold",
+      "enabled": true,
+      "id": "node_b2c87444",
+      "params": {
+        "max_value": 255,
+        "otsu": false,
+        "pre_blur": 1,
+        "thresh": 117,
+        "type": "binary"
+      },
+      "title": "Simple Threshold",
+      "x": 928.1167753110745,
+      "y": -72.48691507023707
+    }
+  ],
+  "notes": [],
+  "version": "1.0"
+}
