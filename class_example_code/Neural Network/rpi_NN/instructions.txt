@@ -1,0 +1,13 @@
+Install ONNX Runtime
+
+1. Download the source to your Raspberry Pi
+
+git clone https://github.com/cassiebreviu/onnxruntime-raspberrypi.git 
+
+2. Navigate to the onnxruntime-raspberrypi folder location and install the package from the requirements.txt with the following command.
+
+cd onnxruntime-raspberrypi
+
+pip install -r requirements.txt --break-system-packages
+
+3. Download the pi code, model.onnx.data file, and sample_images.zip files into the folder. Run the pi code.

@@ -1,0 +1,115 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "n2",
+      "dst_port": "image",
+      "id": "e1",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "image",
+      "id": "e2",
+      "src_node": "n2",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "detections",
+      "id": "e3",
+      "src_node": "n2",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "image",
+      "id": "e4",
+      "src_node": "n3",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "detections",
+      "id": "e5",
+      "src_node": "n3",
+      "src_port": "detections"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T20:32:34.658268+00:00",
+    "example": "video_frame_face"
+  },
+  "nodes": [
+    {
+      "block_type": "VideoFrameInput",
+      "enabled": true,
+      "id": "n1",
+      "params": {
+        "frame_index": 120,
+        "set_fps": 0.0,
+        "set_height": 0,
+        "set_width": 0,
+        "source": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/BR99.mp4"
+      },
+      "title": "Video Frame Source",
+      "x": -500,
+      "y": -80
+    },
+    {
+      "block_type": "CascadeDetectCustom",
+      "enabled": true,
+      "id": "n2",
+      "params": {
+        "cascade_path": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/haarcascades/haarcascade_frontalface_alt.xml",
+        "min_neighbors": 8,
+        "min_size_h": 60,
+        "min_size_w": 60,
+        "scale_factor": 1.01
+      },
+      "title": "Face Cascade",
+      "x": -200,
+      "y": -80
+    },
+    {
+      "block_type": "DetectionStyleDraw",
+      "enabled": true,
+      "id": "n3",
+      "params": {
+        "shape": "ellipse"
+      },
+      "title": "Style",
+      "x": 90,
+      "y": -80
+    },
+    {
+      "block_type": "ContourCount",
+      "enabled": true,
+      "id": "n4",
+      "params": {
+        "annotate": true,
+        "label_filter": "cascade_obj",
+        "title_prefix": "Faces"
+      },
+      "title": "Count Faces",
+      "x": 370,
+      "y": -80
+    }
+  ],
+  "notes": [
+    {
+      "id": "note1",
+      "markdown": "Still-image workflow but sourced from a chosen frame index of a video file.",
+      "title": "Video Frame Mode",
+      "x": -510,
+      "y": 120
+    }
+  ],
+  "version": "1.0"
+}

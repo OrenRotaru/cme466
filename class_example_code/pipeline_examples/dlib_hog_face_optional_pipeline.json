@@ -1,0 +1,110 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "n2",
+      "dst_port": "image",
+      "id": "e1",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "image",
+      "id": "e2",
+      "src_node": "n2",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "detections",
+      "id": "e3",
+      "src_node": "n2",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "image",
+      "id": "e4",
+      "src_node": "n3",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "detections",
+      "id": "e5",
+      "src_node": "n3",
+      "src_port": "detections"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T20:32:34.658193+00:00",
+    "example": "dlib_hog_face_optional"
+  },
+  "nodes": [
+    {
+      "block_type": "ImageInput",
+      "enabled": true,
+      "id": "n1",
+      "params": {
+        "image_path": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/people3.jpg"
+      },
+      "title": "People",
+      "x": -470,
+      "y": -80
+    },
+    {
+      "block_type": "DlibHOGFaceDetect",
+      "enabled": true,
+      "id": "n2",
+      "params": {
+        "adjust_threshold": 0.0,
+        "upsample_num_times": 1
+      },
+      "title": "Dlib HOG Faces",
+      "x": -160,
+      "y": -80
+    },
+    {
+      "block_type": "DetectionStyleDraw",
+      "enabled": true,
+      "id": "n3",
+      "params": {
+        "score_low": -1.0,
+        "score_mid": 0.0,
+        "shape": "rectangle"
+      },
+      "title": "Style Faces",
+      "x": 120,
+      "y": -80
+    },
+    {
+      "block_type": "ContourCount",
+      "enabled": true,
+      "id": "n4",
+      "params": {
+        "annotate": true,
+        "label_filter": "face",
+        "title_prefix": "Dlib faces"
+      },
+      "title": "Count Faces",
+      "x": 410,
+      "y": -80
+    }
+  ],
+  "notes": [
+    {
+      "id": "note1",
+      "markdown": "Requires `dlib` installed. This pipeline mirrors the course dlib HOG face detector examples.",
+      "title": "Optional Dependency",
+      "x": -470,
+      "y": 110
+    }
+  ],
+  "version": "1.0"
+}

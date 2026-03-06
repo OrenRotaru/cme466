@@ -1,0 +1,124 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "n2",
+      "dst_port": "image",
+      "id": "e1",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "image",
+      "id": "e2",
+      "src_node": "n2",
+      "src_port": "image_a"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "image_b",
+      "id": "e3",
+      "src_node": "n3",
+      "src_port": "image_b"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "image_g",
+      "id": "e4",
+      "src_node": "n3",
+      "src_port": "image_g"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "image_r",
+      "id": "e5",
+      "src_node": "n3",
+      "src_port": "image_r"
+    },
+    {
+      "dst_node": "n5",
+      "dst_port": "image_a",
+      "id": "e6",
+      "src_node": "n2",
+      "src_port": "image_b"
+    },
+    {
+      "dst_node": "n5",
+      "dst_port": "image_b",
+      "id": "e7",
+      "src_node": "n4",
+      "src_port": "image"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T20:32:34.658041+00:00",
+    "example": "channel_split_merge_psnr"
+  },
+  "nodes": [
+    {
+      "block_type": "ImageInput",
+      "enabled": true,
+      "id": "n1",
+      "params": {
+        "image_path": "/Users/oren/code/cme466/class_example_code/imgs/girl.jpg"
+      },
+      "title": "Girl",
+      "x": -600,
+      "y": -80
+    },
+    {
+      "block_type": "SplitImage",
+      "enabled": true,
+      "id": "n2",
+      "params": {},
+      "title": "Keep Original",
+      "x": -380,
+      "y": -80
+    },
+    {
+      "block_type": "ChannelSplit",
+      "enabled": true,
+      "id": "n3",
+      "params": {},
+      "title": "Split BGR",
+      "x": -140,
+      "y": -80
+    },
+    {
+      "block_type": "ChannelMerge",
+      "enabled": true,
+      "id": "n4",
+      "params": {},
+      "title": "Merge BGR",
+      "x": 140,
+      "y": -80
+    },
+    {
+      "block_type": "PSNRCompare",
+      "enabled": true,
+      "id": "n5",
+      "params": {
+        "r": 255.0
+      },
+      "title": "PSNR Reconstruct",
+      "x": 420,
+      "y": -80
+    }
+  ],
+  "notes": [
+    {
+      "id": "note1",
+      "markdown": "Shows channel split/merge and reconstruction quality check with PSNR.",
+      "title": "Channel Workflow",
+      "x": -600,
+      "y": 110
+    }
+  ],
+  "version": "1.0"
+}

@@ -1,0 +1,131 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "n2",
+      "dst_port": "image",
+      "id": "e1",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "mask",
+      "id": "e2",
+      "src_node": "n2",
+      "src_port": "mask"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "mask",
+      "id": "e3",
+      "src_node": "n3",
+      "src_port": "mask"
+    },
+    {
+      "dst_node": "n5",
+      "dst_port": "image",
+      "id": "e4",
+      "src_node": "n4",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n5",
+      "dst_port": "detections",
+      "id": "e5",
+      "src_node": "n4",
+      "src_port": "detections"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T20:32:34.657783+00:00",
+    "example": "soccer_green_mask"
+  },
+  "nodes": [
+    {
+      "block_type": "ImageInput",
+      "enabled": true,
+      "id": "n1",
+      "params": {
+        "image_path": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/soccer1.jpg"
+      },
+      "title": "Soccer",
+      "x": -560,
+      "y": -100
+    },
+    {
+      "block_type": "InRangeMask",
+      "enabled": true,
+      "id": "n2",
+      "params": {
+        "color_space": "hsv",
+        "high_0": 90,
+        "high_1": 255,
+        "high_2": 255,
+        "low_0": 28,
+        "low_1": 40,
+        "low_2": 40
+      },
+      "title": "HSV Green Mask",
+      "x": -290,
+      "y": -100
+    },
+    {
+      "block_type": "BinaryMorphology",
+      "enabled": true,
+      "id": "n3",
+      "params": {
+        "iterations": 1,
+        "kernel_h": 5,
+        "kernel_shape": "ellipse",
+        "kernel_w": 5,
+        "operation": "close"
+      },
+      "title": "Close",
+      "x": -20,
+      "y": -100
+    },
+    {
+      "block_type": "ContoursAnalysis",
+      "enabled": true,
+      "id": "n4",
+      "params": {
+        "area_max": 999999,
+        "area_min": 300,
+        "draw_mode": "boxes",
+        "filter_by_area": true,
+        "retrieval": "external"
+      },
+      "title": "Regions",
+      "x": 250,
+      "y": -100
+    },
+    {
+      "block_type": "ContourCount",
+      "enabled": true,
+      "id": "n5",
+      "params": {
+        "annotate": true,
+        "title_prefix": "Green regions"
+      },
+      "title": "Count Regions",
+      "x": 520,
+      "y": -100
+    }
+  ],
+  "notes": [
+    {
+      "id": "note1",
+      "markdown": "Template for HSV masking + morphology + contour counting.",
+      "title": "Color Segmentation",
+      "x": -560,
+      "y": 120
+    }
+  ],
+  "version": "1.0"
+}

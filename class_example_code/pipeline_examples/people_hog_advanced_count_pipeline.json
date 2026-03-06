@@ -1,0 +1,119 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "n2",
+      "dst_port": "image",
+      "id": "e1",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "image",
+      "id": "e2",
+      "src_node": "n2",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "detections",
+      "id": "e3",
+      "src_node": "n2",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "image",
+      "id": "e4",
+      "src_node": "n3",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "detections",
+      "id": "e5",
+      "src_node": "n3",
+      "src_port": "detections"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T20:32:34.657322+00:00",
+    "example": "people_hog_advanced_count"
+  },
+  "nodes": [
+    {
+      "block_type": "ImageInput",
+      "enabled": true,
+      "id": "n1",
+      "params": {
+        "image_path": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/people3.jpg"
+      },
+      "title": "People Image",
+      "x": -420,
+      "y": -80
+    },
+    {
+      "block_type": "HOGDetectMultiScaleAdvanced",
+      "enabled": true,
+      "id": "n2",
+      "params": {
+        "confidence_threshold": 0.13,
+        "final_threshold": 2.0,
+        "hit_threshold": 0.0,
+        "padding_x": 8,
+        "padding_y": 8,
+        "scale": 1.01,
+        "win_stride_x": 5,
+        "win_stride_y": 5
+      },
+      "title": "HOG Detect",
+      "x": -130,
+      "y": -80
+    },
+    {
+      "block_type": "DetectionStyleDraw",
+      "enabled": true,
+      "id": "n3",
+      "params": {
+        "score_low": 0.13,
+        "score_mid": 0.3,
+        "shape": "rectangle",
+        "show_label": true,
+        "show_score": true
+      },
+      "title": "Style Draw",
+      "x": 170,
+      "y": -80
+    },
+    {
+      "block_type": "ContourCount",
+      "enabled": true,
+      "id": "n4",
+      "params": {
+        "annotate": true,
+        "exact_match": true,
+        "label_filter": "person",
+        "title_prefix": "People"
+      },
+      "title": "Count People",
+      "x": 470,
+      "y": -80
+    }
+  ],
+  "notes": [
+    {
+      "id": "note1",
+      "markdown": "Replicates the HOG confidence-bucket style used in the FaceDetection notebook examples.",
+      "title": "HOG Counting",
+      "x": -430,
+      "y": 100
+    }
+  ],
+  "version": "1.0"
+}

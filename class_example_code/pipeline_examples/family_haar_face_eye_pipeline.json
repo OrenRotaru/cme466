@@ -1,0 +1,114 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "n2",
+      "dst_port": "image",
+      "id": "e1",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "image",
+      "id": "e2",
+      "src_node": "n2",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "detections",
+      "id": "e3",
+      "src_node": "n2",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "image",
+      "id": "e4",
+      "src_node": "n3",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "detections",
+      "id": "e5",
+      "src_node": "n3",
+      "src_port": "detections"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T20:32:34.657619+00:00",
+    "example": "family_haar_face_eye"
+  },
+  "nodes": [
+    {
+      "block_type": "ImageInput",
+      "enabled": true,
+      "id": "n1",
+      "params": {
+        "image_path": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/family.jpg"
+      },
+      "title": "Family",
+      "x": -470,
+      "y": -80
+    },
+    {
+      "block_type": "HaarMultiDetect",
+      "enabled": true,
+      "id": "n2",
+      "params": {
+        "eyes": true,
+        "frontal": true,
+        "min_neighbors": 5,
+        "min_size": 25,
+        "profile": false,
+        "scale_factor": 1.05,
+        "smile": false
+      },
+      "title": "Haar Multi",
+      "x": -170,
+      "y": -80
+    },
+    {
+      "block_type": "DetectionStyleDraw",
+      "enabled": true,
+      "id": "n3",
+      "params": {
+        "shape": "ellipse"
+      },
+      "title": "Styled",
+      "x": 120,
+      "y": -80
+    },
+    {
+      "block_type": "ContourCount",
+      "enabled": true,
+      "id": "n4",
+      "params": {
+        "annotate": true,
+        "exact_match": true,
+        "label_filter": "frontal_face",
+        "title_prefix": "Faces"
+      },
+      "title": "Count Faces",
+      "x": 390,
+      "y": -80
+    }
+  ],
+  "notes": [
+    {
+      "id": "note1",
+      "markdown": "Counts frontal faces while still drawing eyes and other detections.",
+      "title": "Face Counting",
+      "x": -480,
+      "y": 100
+    }
+  ],
+  "version": "1.0"
+}

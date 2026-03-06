@@ -1,0 +1,14 @@
+[project]
+name = "lab-exams"
+version = "0.1.0"
+description = "Lab Exams"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "paho-mqtt",
+    "pyqt5>=5.15.11",
+    "cryptography",
+    "gpiozero",
+    "rpi-lgpio; sys_platform == 'linux'",
+    "pyside6>=6.10.2",
+]

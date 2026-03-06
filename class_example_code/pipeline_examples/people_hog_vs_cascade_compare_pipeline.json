@@ -1,0 +1,171 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "n2",
+      "dst_port": "image",
+      "id": "e1",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "image",
+      "id": "e2",
+      "src_node": "n2",
+      "src_port": "image_a"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "image",
+      "id": "e3",
+      "src_node": "n3",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "detections",
+      "id": "e4",
+      "src_node": "n3",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n5",
+      "dst_port": "image",
+      "id": "e5",
+      "src_node": "n2",
+      "src_port": "image_b"
+    },
+    {
+      "dst_node": "n6",
+      "dst_port": "image",
+      "id": "e6",
+      "src_node": "n5",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n6",
+      "dst_port": "detections",
+      "id": "e7",
+      "src_node": "n5",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n7",
+      "dst_port": "image_a",
+      "id": "e8",
+      "src_node": "n4",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n7",
+      "dst_port": "image_b",
+      "id": "e9",
+      "src_node": "n6",
+      "src_port": "image"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T20:32:34.657524+00:00",
+    "example": "people_hog_vs_cascade"
+  },
+  "nodes": [
+    {
+      "block_type": "ImageInput",
+      "enabled": true,
+      "id": "n1",
+      "params": {
+        "image_path": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/people3.jpg"
+      },
+      "title": "People Image",
+      "x": -650,
+      "y": -120
+    },
+    {
+      "block_type": "SplitImage",
+      "enabled": true,
+      "id": "n2",
+      "params": {},
+      "title": "Branch",
+      "x": -420,
+      "y": -120
+    },
+    {
+      "block_type": "HOGDetectMultiScaleAdvanced",
+      "enabled": true,
+      "id": "n3",
+      "params": {
+        "confidence_threshold": 0.13,
+        "scale": 1.01,
+        "win_stride_x": 5,
+        "win_stride_y": 5
+      },
+      "title": "HOG Branch",
+      "x": -150,
+      "y": -220
+    },
+    {
+      "block_type": "DetectionStyleDraw",
+      "enabled": true,
+      "id": "n4",
+      "params": {
+        "shape": "rectangle"
+      },
+      "title": "HOG Styled",
+      "x": 140,
+      "y": -220
+    },
+    {
+      "block_type": "CascadeDetectCustom",
+      "enabled": true,
+      "id": "n5",
+      "params": {
+        "cascade_path": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/haarcascades/haarcascade_fullbody.xml",
+        "min_neighbors": 3,
+        "min_size_h": 80,
+        "min_size_w": 40,
+        "scale_factor": 1.01
+      },
+      "title": "Cascade Branch",
+      "x": -150,
+      "y": 0
+    },
+    {
+      "block_type": "DetectionStyleDraw",
+      "enabled": true,
+      "id": "n6",
+      "params": {
+        "shape": "ellipse"
+      },
+      "title": "Cascade Styled",
+      "x": 140,
+      "y": 0
+    },
+    {
+      "block_type": "MergeImage",
+      "enabled": true,
+      "id": "n7",
+      "params": {
+        "mode": "hconcat"
+      },
+      "title": "Compare HOG vs Cascade",
+      "x": 470,
+      "y": -110
+    }
+  ],
+  "notes": [
+    {
+      "id": "note1",
+      "markdown": "Useful template for comparing two detectors on the same image via split/merge.",
+      "title": "Detector Comparison",
+      "x": -650,
+      "y": 120
+    }
+  ],
+  "version": "1.0"
+}
