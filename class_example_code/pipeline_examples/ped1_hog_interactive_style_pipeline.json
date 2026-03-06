@@ -1,0 +1,200 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "n2",
+      "dst_port": "image",
+      "id": "e1",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n7",
+      "dst_port": "image_b",
+      "id": "e10",
+      "src_node": "n6",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "image",
+      "id": "e2",
+      "src_node": "n2",
+      "src_port": "image_a"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "image",
+      "id": "e3",
+      "src_node": "n2",
+      "src_port": "image_b"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "detections",
+      "id": "e4",
+      "src_node": "n3",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n5",
+      "dst_port": "image",
+      "id": "e5",
+      "src_node": "n6",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n5",
+      "dst_port": "detections",
+      "id": "e6",
+      "src_node": "n6",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n6",
+      "dst_port": "image",
+      "id": "e7",
+      "src_node": "n2",
+      "src_port": "image_b"
+    },
+    {
+      "dst_node": "n6",
+      "dst_port": "detections",
+      "id": "e8",
+      "src_node": "n3",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n7",
+      "dst_port": "image_a",
+      "id": "e9",
+      "src_node": "n5",
+      "src_port": "image"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T21:10:19.105207+00:00",
+    "example": "ped1_hog_interactive_style"
+  },
+  "nodes": [
+    {
+      "block_type": "ImageInput",
+      "enabled": true,
+      "id": "n1",
+      "params": {
+        "image_path": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/ped1.jpg"
+      },
+      "title": "Pedestrian Image",
+      "x": -620,
+      "y": -80
+    },
+    {
+      "block_type": "SplitImage",
+      "enabled": true,
+      "id": "n2",
+      "params": {},
+      "title": "Branch Original/Detector",
+      "x": -380,
+      "y": -80
+    },
+    {
+      "block_type": "HOGDetectMultiScaleAdvanced",
+      "enabled": true,
+      "id": "n3",
+      "params": {
+        "confidence_threshold": -10.0,
+        "draw_score": false,
+        "final_threshold": 2.0,
+        "hit_threshold": 0.0,
+        "max_detections": 0,
+        "padding_x": 32,
+        "padding_y": 32,
+        "scale": 1.05,
+        "use_meanshift_grouping": false,
+        "win_stride_x": 8,
+        "win_stride_y": 8
+      },
+      "title": "HOG Detect (tune stride/padding/scale)",
+      "x": -80,
+      "y": -180
+    },
+    {
+      "block_type": "DrawDetections",
+      "enabled": true,
+      "id": "n4",
+      "params": {
+        "show_label": false,
+        "show_score": false
+      },
+      "title": "Draw Green Boxes",
+      "x": 220,
+      "y": -80
+    },
+    {
+      "block_type": "ContourCount",
+      "enabled": true,
+      "id": "n5",
+      "params": {
+        "annotate": true,
+        "exact_match": true,
+        "label_filter": "person",
+        "title_prefix": "Detected Pedestrians"
+      },
+      "title": "Count Pedestrians",
+      "x": 500,
+      "y": -80
+    },
+    {
+      "block_type": "DetectionStyleDraw",
+      "enabled": true,
+      "id": "n6",
+      "params": {
+        "filter_by_score": true,
+        "max_score": 10.0,
+        "min_score": 0.13,
+        "score_low": 0.0,
+        "score_mid": 0.7,
+        "shape": "rectangle",
+        "show_label": false,
+        "show_score": true
+      },
+      "title": "Optional Score Styling",
+      "x": 220,
+      "y": -280
+    },
+    {
+      "block_type": "MergeImage",
+      "enabled": true,
+      "id": "n7",
+      "params": {
+        "alpha": 0.5,
+        "mode": "hconcat"
+      },
+      "title": "Compare Plain vs Styled",
+      "x": 820,
+      "y": -150
+    }
+  ],
+  "notes": [
+    {
+      "id": "note1",
+      "markdown": "Equivalent to `hog.detectMultiScale(img, winStride=(v,v), padding=(p,p), scale=s)` on `ped1.jpg`. Tune `win_stride_x/y`, `padding_x/y`, and `scale` in the HOG node properties panel.",
+      "title": "Matches Notebook Intent",
+      "x": -640,
+      "y": 110
+    },
+    {
+      "id": "note2",
+      "markdown": "Left output branch shows plain green boxes. Right branch applies score styling + score filtering (`min_score`/`max_score`) and count annotation.",
+      "title": "Output",
+      "x": 190,
+      "y": 110
+    }
+  ],
+  "version": "1.0"
+}

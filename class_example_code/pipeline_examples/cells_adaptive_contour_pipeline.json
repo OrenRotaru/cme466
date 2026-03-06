@@ -1,0 +1,145 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "n2",
+      "dst_port": "image",
+      "id": "e1",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "image",
+      "id": "e2",
+      "src_node": "n2",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "mask",
+      "id": "e3",
+      "src_node": "n3",
+      "src_port": "mask"
+    },
+    {
+      "dst_node": "n5",
+      "dst_port": "mask",
+      "id": "e4",
+      "src_node": "n4",
+      "src_port": "mask"
+    },
+    {
+      "dst_node": "n6",
+      "dst_port": "image",
+      "id": "e5",
+      "src_node": "n5",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n6",
+      "dst_port": "detections",
+      "id": "e6",
+      "src_node": "n5",
+      "src_port": "detections"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T20:32:34.657212+00:00",
+    "example": "cells_adaptive_contours"
+  },
+  "nodes": [
+    {
+      "block_type": "ImageInput",
+      "enabled": true,
+      "id": "n1",
+      "params": {
+        "image_path": "/Users/oren/code/cme466/class_example_code/imgs/cells.jpg"
+      },
+      "title": "Cells Image",
+      "x": -500,
+      "y": -80
+    },
+    {
+      "block_type": "GrayConvert",
+      "enabled": true,
+      "id": "n2",
+      "params": {},
+      "title": "Gray",
+      "x": -250,
+      "y": -80
+    },
+    {
+      "block_type": "AdaptiveThreshold",
+      "enabled": true,
+      "id": "n3",
+      "params": {
+        "block_size": 21,
+        "c": 2,
+        "method": "gaussian",
+        "pre_blur": 3,
+        "type": "binary_inv"
+      },
+      "title": "Adaptive",
+      "x": 0,
+      "y": -80
+    },
+    {
+      "block_type": "BinaryMorphology",
+      "enabled": true,
+      "id": "n4",
+      "params": {
+        "iterations": 1,
+        "kernel_h": 3,
+        "kernel_shape": "ellipse",
+        "kernel_w": 3,
+        "operation": "open"
+      },
+      "title": "Open",
+      "x": 250,
+      "y": -80
+    },
+    {
+      "block_type": "ContoursAnalysis",
+      "enabled": true,
+      "id": "n5",
+      "params": {
+        "area_max": 6000,
+        "area_min": 20,
+        "draw_mode": "both",
+        "filter_by_area": true,
+        "retrieval": "external"
+      },
+      "title": "Contours",
+      "x": 500,
+      "y": -80
+    },
+    {
+      "block_type": "ContourCount",
+      "enabled": true,
+      "id": "n6",
+      "params": {
+        "annotate": true,
+        "title_prefix": "Cells"
+      },
+      "title": "Count Cells",
+      "x": 760,
+      "y": -80
+    }
+  ],
+  "notes": [
+    {
+      "id": "note1",
+      "markdown": "Adaptive thresholding is often more stable than a global threshold for uneven illumination.",
+      "title": "Cell Counting",
+      "x": -520,
+      "y": 100
+    }
+  ],
+  "version": "1.0"
+}

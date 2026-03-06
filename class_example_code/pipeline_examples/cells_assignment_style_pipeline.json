@@ -1,0 +1,299 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "n2",
+      "dst_port": "image",
+      "id": "e1",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n10",
+      "dst_port": "detections",
+      "id": "e10",
+      "src_node": "n9",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n11",
+      "dst_port": "image",
+      "id": "e11",
+      "src_node": "n10",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n11",
+      "dst_port": "detections",
+      "id": "e12",
+      "src_node": "n9",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n12",
+      "dst_port": "image_a",
+      "id": "e13",
+      "src_node": "n9",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n12",
+      "dst_port": "image_b",
+      "id": "e14",
+      "src_node": "n11",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "image",
+      "id": "e2",
+      "src_node": "n2",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "image",
+      "id": "e3",
+      "src_node": "n3",
+      "src_port": "image_a"
+    },
+    {
+      "dst_node": "n5",
+      "dst_port": "image",
+      "id": "e4",
+      "src_node": "n4",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n6",
+      "dst_port": "image",
+      "id": "e5",
+      "src_node": "n5",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n7",
+      "dst_port": "mask",
+      "id": "e6",
+      "src_node": "n6",
+      "src_port": "mask"
+    },
+    {
+      "dst_node": "n8",
+      "dst_port": "mask",
+      "id": "e7",
+      "src_node": "n7",
+      "src_port": "mask"
+    },
+    {
+      "dst_node": "n9",
+      "dst_port": "mask",
+      "id": "e8",
+      "src_node": "n8",
+      "src_port": "mask"
+    },
+    {
+      "dst_node": "n10",
+      "dst_port": "image",
+      "id": "e9",
+      "src_node": "n3",
+      "src_port": "image_b"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T20:59:50.710521+00:00",
+    "example": "cells_assignment_style"
+  },
+  "nodes": [
+    {
+      "block_type": "ImageInput",
+      "enabled": true,
+      "id": "n1",
+      "params": {
+        "image_path": "/Users/oren/code/cme466/class_example_code/imgs/cells.jpg"
+      },
+      "title": "Cells Input",
+      "x": -980,
+      "y": -100
+    },
+    {
+      "block_type": "DrawDetections",
+      "enabled": true,
+      "id": "n10",
+      "params": {
+        "show_label": false,
+        "show_score": false
+      },
+      "title": "Draw Boxes on RGB Crop",
+      "x": 1110,
+      "y": 30
+    },
+    {
+      "block_type": "ContourCount",
+      "enabled": true,
+      "id": "n11",
+      "params": {
+        "annotate": true,
+        "exact_match": true,
+        "label_filter": "contour",
+        "title_prefix": "Detected Cells"
+      },
+      "title": "Count Cells",
+      "x": 1380,
+      "y": 30
+    },
+    {
+      "block_type": "MergeImage",
+      "enabled": true,
+      "id": "n12",
+      "params": {
+        "alpha": 0.5,
+        "mode": "hconcat"
+      },
+      "title": "Compare (Mask Contours | RGB Boxes)",
+      "x": 1660,
+      "y": -110
+    },
+    {
+      "block_type": "ImageCrop",
+      "enabled": true,
+      "id": "n2",
+      "params": {
+        "height": 271,
+        "width": 444,
+        "x": 30,
+        "y": 30
+      },
+      "title": "Crop 30px Border",
+      "x": -730,
+      "y": -100
+    },
+    {
+      "block_type": "SplitImage",
+      "enabled": true,
+      "id": "n3",
+      "params": {},
+      "title": "Branch RGB/Mask",
+      "x": -490,
+      "y": -100
+    },
+    {
+      "block_type": "GrayConvert",
+      "enabled": true,
+      "id": "n4",
+      "params": {},
+      "title": "Gray",
+      "x": -250,
+      "y": -230
+    },
+    {
+      "block_type": "DenoiseBlur",
+      "enabled": true,
+      "id": "n5",
+      "params": {
+        "gauss_ksize_x": 7,
+        "gauss_ksize_y": 7,
+        "gauss_sigma_x": 0.0,
+        "gauss_sigma_y": 0.0,
+        "method": "gaussian"
+      },
+      "title": "Gaussian Blur k=7",
+      "x": 10,
+      "y": -230
+    },
+    {
+      "block_type": "SimpleThreshold",
+      "enabled": true,
+      "id": "n6",
+      "params": {
+        "max_value": 255,
+        "otsu": false,
+        "pre_blur": 1,
+        "thresh": 186,
+        "type": "binary_inv"
+      },
+      "title": "Binary Inv Thresh 186",
+      "x": 280,
+      "y": -230
+    },
+    {
+      "block_type": "BinaryMorphology",
+      "enabled": true,
+      "id": "n7",
+      "params": {
+        "binary_thresh": 127,
+        "ensure_binary": true,
+        "invert_before": false,
+        "iterations": 1,
+        "kernel_h": 9,
+        "kernel_shape": "ellipse",
+        "kernel_w": 9,
+        "operation": "erode"
+      },
+      "title": "Morph Pass1 (Erode k=9)",
+      "x": 550,
+      "y": -230
+    },
+    {
+      "block_type": "BinaryMorphology",
+      "enabled": true,
+      "id": "n8",
+      "params": {
+        "binary_thresh": 127,
+        "ensure_binary": true,
+        "invert_before": false,
+        "iterations": 1,
+        "kernel_h": 1,
+        "kernel_shape": "ellipse",
+        "kernel_w": 1,
+        "operation": "erode"
+      },
+      "title": "Morph Pass2 (Erode k=1)",
+      "x": 820,
+      "y": -230
+    },
+    {
+      "block_type": "ContoursAnalysis",
+      "enabled": true,
+      "id": "n9",
+      "params": {
+        "approx_mode": "simple",
+        "area_max": 5972,
+        "area_min": 0,
+        "binary_thresh": 127,
+        "draw_mode": "both",
+        "draw_thickness": 2,
+        "ensure_binary": true,
+        "filter_by_area": true,
+        "filter_by_aspect_ratio": false,
+        "invert": false,
+        "retrieval": "external"
+      },
+      "title": "Find External Contours",
+      "x": 1110,
+      "y": -230
+    }
+  ],
+  "notes": [
+    {
+      "id": "note1",
+      "markdown": "Matches the provided workflow: crop -> gray -> Gaussian blur(k=7) -> binary_inv threshold(186) -> morphology pass1(erode,k=9) -> pass2(erode,k=1) -> findContours(RETR_EXTERNAL, CHAIN_APPROX_SIMPLE) with area filter [0,5972] and final count annotation.",
+      "title": "Assignment-Style Mapping",
+      "x": -980,
+      "y": 130
+    },
+    {
+      "id": "note2",
+      "markdown": "ContoursAnalysis draws contours+boxes on the binary-mask visualization. DrawDetections overlays detection boxes on the cropped RGB image; MergeImage shows both side-by-side.",
+      "title": "Output View",
+      "x": 1040,
+      "y": 130
+    }
+  ],
+  "version": "1.0"
+}

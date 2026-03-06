@@ -1,0 +1,266 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "n2",
+      "dst_port": "image",
+      "id": "e1",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n8",
+      "dst_port": "image",
+      "id": "e10",
+      "src_node": "n7",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n8",
+      "dst_port": "detections",
+      "id": "e11",
+      "src_node": "n4",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "image",
+      "id": "e2",
+      "src_node": "n2",
+      "src_port": "image_a"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "image",
+      "id": "e3",
+      "src_node": "n2",
+      "src_port": "image_b"
+    },
+    {
+      "dst_node": "n5",
+      "dst_port": "image",
+      "id": "e4",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n5",
+      "dst_port": "detections",
+      "id": "e5",
+      "src_node": "n3",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n6",
+      "dst_port": "image",
+      "id": "e6",
+      "src_node": "n5",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n6",
+      "dst_port": "detections",
+      "id": "e7",
+      "src_node": "n4",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n7",
+      "dst_port": "image",
+      "id": "e8",
+      "src_node": "n6",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n7",
+      "dst_port": "detections",
+      "id": "e9",
+      "src_node": "n3",
+      "src_port": "detections"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T21:27:15.313637+00:00",
+    "example": "people_face_eye_lecture_style"
+  },
+  "nodes": [
+    {
+      "block_type": "ImageInput",
+      "enabled": true,
+      "id": "n1",
+      "params": {
+        "image_path": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/people.jpg"
+      },
+      "title": "People Input",
+      "x": -820,
+      "y": -80
+    },
+    {
+      "block_type": "SplitImage",
+      "enabled": true,
+      "id": "n2",
+      "params": {},
+      "title": "Branch Face / Eye Detection",
+      "x": -560,
+      "y": -80
+    },
+    {
+      "block_type": "CascadeDetectCustom",
+      "enabled": true,
+      "id": "n3",
+      "params": {
+        "cascade_path": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/haarcascades/haarcascade_frontalface_alt.xml",
+        "draw_mode": "none",
+        "draw_thickness": 4,
+        "equalize_hist": true,
+        "flags": 0,
+        "label": "face",
+        "max_size_h": 500,
+        "max_size_w": 500,
+        "min_neighbors": 12,
+        "min_size_h": 70,
+        "min_size_w": 70,
+        "scale_factor": 1.001,
+        "use_samples_findfile": false
+      },
+      "title": "Face Cascade Detect",
+      "x": -260,
+      "y": -210
+    },
+    {
+      "block_type": "CascadeDetectCustom",
+      "enabled": true,
+      "id": "n4",
+      "params": {
+        "cascade_path": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml",
+        "draw_mode": "none",
+        "draw_thickness": 4,
+        "equalize_hist": true,
+        "flags": 0,
+        "label": "eye",
+        "max_size_h": 50,
+        "max_size_w": 50,
+        "min_neighbors": 10,
+        "min_size_h": 10,
+        "min_size_w": 10,
+        "scale_factor": 1.01,
+        "use_samples_findfile": false
+      },
+      "title": "Eye Cascade Detect",
+      "x": -260,
+      "y": 40
+    },
+    {
+      "block_type": "DetectionStyleDraw",
+      "enabled": true,
+      "id": "n5",
+      "params": {
+        "filter_by_score": false,
+        "font_scale": 0.45,
+        "high_b": 255,
+        "high_g": 0,
+        "high_r": 255,
+        "label_filter": "face",
+        "line_type": "aa",
+        "low_b": 255,
+        "low_g": 0,
+        "low_r": 255,
+        "max_score": 10.0,
+        "mid_b": 255,
+        "mid_g": 0,
+        "mid_r": 255,
+        "min_score": -10.0,
+        "score_low": 0.13,
+        "score_mid": 0.3,
+        "shape": "ellipse",
+        "show_label": false,
+        "show_score": false,
+        "thickness": 4
+      },
+      "title": "Draw Face Ellipses",
+      "x": 80,
+      "y": -210
+    },
+    {
+      "block_type": "DetectionStyleDraw",
+      "enabled": true,
+      "id": "n6",
+      "params": {
+        "filter_by_score": false,
+        "font_scale": 0.45,
+        "high_b": 255,
+        "high_g": 0,
+        "high_r": 0,
+        "label_filter": "eye",
+        "line_type": "aa",
+        "low_b": 255,
+        "low_g": 0,
+        "low_r": 0,
+        "max_score": 10.0,
+        "mid_b": 255,
+        "mid_g": 0,
+        "mid_r": 0,
+        "min_score": -10.0,
+        "score_low": 0.13,
+        "score_mid": 0.3,
+        "shape": "circle",
+        "show_label": false,
+        "show_score": false,
+        "thickness": 4
+      },
+      "title": "Draw Eye Circles",
+      "x": 410,
+      "y": -210
+    },
+    {
+      "block_type": "ContourCount",
+      "enabled": true,
+      "id": "n7",
+      "params": {
+        "annotate": false,
+        "exact_match": true,
+        "label_filter": "face",
+        "title_prefix": "Faces"
+      },
+      "title": "Count Faces",
+      "x": 730,
+      "y": -120
+    },
+    {
+      "block_type": "ContourCount",
+      "enabled": true,
+      "id": "n8",
+      "params": {
+        "annotate": true,
+        "exact_match": true,
+        "label_filter": "eye",
+        "title_prefix": "Eyes"
+      },
+      "title": "Count Eyes",
+      "x": 980,
+      "y": -120
+    }
+  ],
+  "notes": [
+    {
+      "id": "note1",
+      "markdown": "Uses separate CascadeDetectCustom blocks for faces and eyes so parameters are tuned independently (matching lecture constants).",
+      "title": "Independent Cascades",
+      "x": -820,
+      "y": 120
+    },
+    {
+      "id": "note2",
+      "markdown": "Eye cascade runs on full image (not restricted to face ROI). If strict face-ROI eye detection is needed, use HaarMultiDetect or a future ROI-gating block.",
+      "title": "ROI Caveat",
+      "x": 40,
+      "y": 120
+    }
+  ],
+  "version": "1.0"
+}

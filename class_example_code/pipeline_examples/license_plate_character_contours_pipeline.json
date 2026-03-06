@@ -1,0 +1,167 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "n2",
+      "dst_port": "image",
+      "id": "e1",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "image",
+      "id": "e2",
+      "src_node": "n2",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "image",
+      "id": "e3",
+      "src_node": "n3",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n5",
+      "dst_port": "mask",
+      "id": "e4",
+      "src_node": "n4",
+      "src_port": "mask"
+    },
+    {
+      "dst_node": "n6",
+      "dst_port": "mask",
+      "id": "e5",
+      "src_node": "n5",
+      "src_port": "mask"
+    },
+    {
+      "dst_node": "n7",
+      "dst_port": "image",
+      "id": "e6",
+      "src_node": "n6",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n7",
+      "dst_port": "detections",
+      "id": "e7",
+      "src_node": "n6",
+      "src_port": "detections"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T20:32:34.657863+00:00",
+    "example": "license_plate_characters"
+  },
+  "nodes": [
+    {
+      "block_type": "ImageInput",
+      "enabled": true,
+      "id": "n1",
+      "params": {
+        "image_path": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/rus_plate.jpg"
+      },
+      "title": "Plate",
+      "x": -660,
+      "y": -80
+    },
+    {
+      "block_type": "ContrastAdjustment",
+      "enabled": true,
+      "id": "n2",
+      "params": {
+        "alpha": 1.6,
+        "beta": 0
+      },
+      "title": "Contrast",
+      "x": -410,
+      "y": -80
+    },
+    {
+      "block_type": "GrayConvert",
+      "enabled": true,
+      "id": "n3",
+      "params": {},
+      "title": "Gray",
+      "x": -160,
+      "y": -80
+    },
+    {
+      "block_type": "AdaptiveThreshold",
+      "enabled": true,
+      "id": "n4",
+      "params": {
+        "block_size": 17,
+        "c": 3,
+        "method": "gaussian",
+        "pre_blur": 3,
+        "type": "binary_inv"
+      },
+      "title": "Adaptive Bin Inv",
+      "x": 90,
+      "y": -80
+    },
+    {
+      "block_type": "BinaryMorphology",
+      "enabled": true,
+      "id": "n5",
+      "params": {
+        "iterations": 1,
+        "kernel_h": 3,
+        "kernel_shape": "rect",
+        "kernel_w": 3,
+        "operation": "open"
+      },
+      "title": "Open",
+      "x": 340,
+      "y": -80
+    },
+    {
+      "block_type": "ContoursAnalysis",
+      "enabled": true,
+      "id": "n6",
+      "params": {
+        "area_max": 9000,
+        "area_min": 70,
+        "aspect_ratio_max": 1.6,
+        "aspect_ratio_min": 0.15,
+        "draw_mode": "boxes",
+        "filter_by_area": true,
+        "filter_by_aspect_ratio": true,
+        "retrieval": "external"
+      },
+      "title": "Character Contours",
+      "x": 590,
+      "y": -80
+    },
+    {
+      "block_type": "ContourCount",
+      "enabled": true,
+      "id": "n7",
+      "params": {
+        "annotate": true,
+        "title_prefix": "Characters"
+      },
+      "title": "Count Chars",
+      "x": 860,
+      "y": -80
+    }
+  ],
+  "notes": [
+    {
+      "id": "note1",
+      "markdown": "Character counting template using adaptive threshold + contour filtering.",
+      "title": "Plate Characters",
+      "x": -670,
+      "y": 120
+    }
+  ],
+  "version": "1.0"
+}

@@ -1,0 +1,112 @@
+{
+  "canvas": {
+    "pan_x": 0.0,
+    "pan_y": 0.0,
+    "zoom": 1.0
+  },
+  "edges": [
+    {
+      "dst_node": "n2",
+      "dst_port": "image",
+      "id": "e1",
+      "src_node": "n1",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "image",
+      "id": "e2",
+      "src_node": "n2",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n3",
+      "dst_port": "detections",
+      "id": "e3",
+      "src_node": "n2",
+      "src_port": "detections"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "image",
+      "id": "e4",
+      "src_node": "n3",
+      "src_port": "image"
+    },
+    {
+      "dst_node": "n4",
+      "dst_port": "detections",
+      "id": "e5",
+      "src_node": "n3",
+      "src_port": "detections"
+    }
+  ],
+  "metadata": {
+    "app_version": "0.1.0",
+    "created_at": "2026-02-27T20:32:34.657705+00:00",
+    "example": "pedestrian_custom_cascade"
+  },
+  "nodes": [
+    {
+      "block_type": "ImageInput",
+      "enabled": true,
+      "id": "n1",
+      "params": {
+        "image_path": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/ped2.jpg"
+      },
+      "title": "Pedestrians",
+      "x": -450,
+      "y": -80
+    },
+    {
+      "block_type": "CascadeDetectCustom",
+      "enabled": true,
+      "id": "n2",
+      "params": {
+        "cascade_path": "/Users/oren/code/cme466/class_example_code/FaceDetection/data/haarcascades/haarcascade_fullbody.xml",
+        "draw_mode": "rectangle",
+        "min_neighbors": 3,
+        "min_size_h": 80,
+        "min_size_w": 40,
+        "scale_factor": 1.01
+      },
+      "title": "Fullbody Cascade",
+      "x": -150,
+      "y": -80
+    },
+    {
+      "block_type": "DetectionStyleDraw",
+      "enabled": true,
+      "id": "n3",
+      "params": {
+        "shape": "rectangle"
+      },
+      "title": "Styled Bodies",
+      "x": 150,
+      "y": -80
+    },
+    {
+      "block_type": "ContourCount",
+      "enabled": true,
+      "id": "n4",
+      "params": {
+        "annotate": true,
+        "label_filter": "cascade_obj",
+        "title_prefix": "Bodies"
+      },
+      "title": "Count Bodies",
+      "x": 430,
+      "y": -80
+    }
+  ],
+  "notes": [
+    {
+      "id": "note1",
+      "markdown": "Demonstrates custom cascade XML path usage.",
+      "title": "Custom XML",
+      "x": -460,
+      "y": 110
+    }
+  ],
+  "version": "1.0"
+}
