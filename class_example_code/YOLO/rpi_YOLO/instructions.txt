@@ -1,0 +1,40 @@
+1. First, you need to create another virtual environment (conflicts with other venv):
+
+python3 -m venv --system-site-packages cme466
+
+source cme466/bin/activate
+
+2. Update the package list and install pip:
+
+sudo apt update
+
+sudo apt install python3-pip -y
+
+pip install -U pip
+
+3. Install ultralytics pip basic package with ncnn support:
+
+pip install ultralytics ncnn
+
+4. Reboot the device:
+
+sudo reboot
+
+5. More info: https://docs.ultralytics.com/guides/raspberry-pi/
+
+
+For live camera:
+sudo apt update
+sudo apt install python3-picamera2 python3-opencv python3-full
+
+python3 -m venv --system-site-packages yoloenv
+source yoloenv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install ultralytics
+
+
+In case of getting error after running the object_detection_camera.py, do this:
+
+python -m pip uninstall -y numpy simplejpeg
+python -c "from picamera2 import Picamera2; print('Picamera2 OK')"
+python -m pip install "numpy<2" ultralytics
